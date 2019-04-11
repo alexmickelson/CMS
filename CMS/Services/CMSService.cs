@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CMS.Data;
 using CMS.Models;
 
 namespace CMS.Services
 {
     public class CMSService : ICMSService
     {
-        public CMSService()
-        {
+        private CMSContext _context;
 
+        public CMSService(CMSContext context)
+        {
+            _context = context;
         }
 
         public Task<bool> AddPageAsync(Page newPage)

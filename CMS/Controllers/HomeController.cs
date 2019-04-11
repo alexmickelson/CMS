@@ -5,11 +5,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CMS.Models;
+using CMS.Services;
 
 namespace CMS.Controllers
 {
     public class HomeController : Controller
     {
+        private ICMSService _cms;
+
+        public HomeController(ICMSService cms)
+        {
+            _cms = cms;
+        }
         public IActionResult Index()
         {
             return View();
@@ -22,6 +29,7 @@ namespace CMS.Controllers
 
         public IActionResult BuildPage()
         {
+
             return View();
         }
 
