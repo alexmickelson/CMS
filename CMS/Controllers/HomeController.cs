@@ -20,6 +20,16 @@ namespace CMS.Controllers
             return View();
         }
 
+        public IActionResult BuildPage()
+        {
+            return View();
+        }
+
+        public IActionResult SavePage(string page)
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
