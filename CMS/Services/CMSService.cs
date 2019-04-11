@@ -8,6 +8,11 @@ namespace CMS.Services
 {
     public class CMSService : ICMSService
     {
+        public CMSService()
+        {
+
+        }
+
         public Task<bool> AddPageAsync(Page newPage)
         {
             throw new NotImplementedException();

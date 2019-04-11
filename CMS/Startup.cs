@@ -36,14 +36,16 @@ namespace CMS
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddScoped<ICMSService, CMSService>();
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(
-                    Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<CMSContext>(options =>
+                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
+                );
+
             services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultTokenProviders()
                 .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-
+                .AddEntityFrameworkStores<CMSContext>();
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
