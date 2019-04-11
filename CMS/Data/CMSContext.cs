@@ -18,6 +18,8 @@ namespace CMS.Data
         {
             base.OnModelCreating(builder);
 
+            
+
             builder.Entity<Page>()
                 .HasMany<Comment>(b => b.Comments)
                 .WithOne();

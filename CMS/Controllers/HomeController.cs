@@ -6,16 +6,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CMS.Models;
 using CMS.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace CMS.Controllers
 {
     public class HomeController : Controller
     {
         private ICMSService _cms;
+        private UserManager<User> _userManager;
 
-        public HomeController(ICMSService cms)
+        public HomeController(ICMSService cms,
+                            UserManager<User> userManager)
         {
             _cms = cms;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
@@ -27,15 +31,42 @@ namespace CMS.Controllers
             return View();
         }
 
+
+        public async Task<IActionResult> ListOfPages()
+        {
+            var pages = await _cms.GetAllPagesAsync();
+            return View(pages);
+        }
+
         public IActionResult BuildPage()
         {
 
             return View();
         }
 
-        public IActionResult SavePage(string page)
+        public IActionResult ViewPage(Guid id)
         {
-            return View();
+            if (id == 0)
+            {
+                break;
+            }
+            var page = _cms.GetPage(id);
+
+            return View(page);
+        }
+
+        public async Task<IActionResult> SavePage(string page)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var p = new Page
+            {
+                Content = page,
+                Id = new Guid(),
+                UserId = " "
+            };
+
+            var a = await _cms.AddPageAsync(p);
+            return RedirectToAction(nameof(ListOfPages));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

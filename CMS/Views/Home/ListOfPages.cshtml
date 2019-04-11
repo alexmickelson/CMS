@@ -1,0 +1,39 @@
+﻿@model IEnumerable<CMS.Models.Page>
+
+@{
+    ViewData["Title"] = "ListOfPages";
+}
+
+<h1>ListOfPages</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                <a asp-action="ViewPage" asp-route-id="@item.Id" >See Page</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

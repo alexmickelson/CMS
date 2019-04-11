@@ -8,7 +8,7 @@ namespace CMS.Models
     public class Page
     {
         public Guid Id { get; set; }
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
         public string Content { get; set; }
         //Change
         public List<Comment> Comments { get; set; }

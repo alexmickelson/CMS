@@ -16,19 +16,29 @@ namespace CMS.Services
             _context = context;
         }
 
-        public Task<bool> AddPageAsync(Page newPage)
+        public async Task<bool> AddPageAsync(Page newPage)
         {
-            throw new NotImplementedException();
+            await _context.Pages.AddAsync(newPage);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
-        public Task<Page[]> GetAllPagesAsync()
+        public async Task<List<Page>> GetAllPagesAsync()
         {
-            throw new NotImplementedException();
+            var pages = _context.Pages.ToList<Page>();
+            await _context.SaveChangesAsync();
+            return pages;
         }
 
         public Task<Comment[]> GetCommentsAsync()
         {
             throw new NotImplementedException();
+        }
+
+        public Page GetPage(Guid pageId)
+        {
+            var a = _context.Pages.Where(p => p.Id == pageId);
+            return a.First();
         }
     }
 }

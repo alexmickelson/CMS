@@ -8,8 +8,9 @@ namespace CMS.Services
 {
     public interface ICMSService
     {
-        Task<Page[]> GetAllPagesAsync();
+        Task<List<Page>> GetAllPagesAsync();
         Task<bool> AddPageAsync(Page newPage);
         Task<Comment[]> GetCommentsAsync();
+        Page GetPage(Guid pageId);
     }
 }

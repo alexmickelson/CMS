@@ -14,6 +14,7 @@ using CMS.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using CMS.Services;
+using CMS.Models;
 
 namespace CMS
 {
@@ -41,10 +42,10 @@ namespace CMS
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
                 );
 
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<User>()
+                .AddEntityFrameworkStores<CMSContext>()
                 .AddDefaultTokenProviders()
-                .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<CMSContext>();
+                .AddDefaultUI(UIFramework.Bootstrap4);
 
 
             

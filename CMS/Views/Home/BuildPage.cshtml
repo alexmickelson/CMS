@@ -51,7 +51,17 @@
 
 
     function savePage() {
-        $('#frames').html()
-        $.post("/home/savepage", { page: JSON.stringify($('#frames').html())});
+        
+        $.ajax({
+            type: 'POST',
+            url: "/home/savepage",
+            data: {
+                'page': $('#frames').html()
+            },
+            success: function () {
+                $(location).attr("href", '/home/listofpages');
+            }
+        });
+
     }
 </script>
