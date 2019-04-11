@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewData["Title"] = "BuildPage";
+}
+
+
+<div class="row h-100">
+    <aside class=" myAside col-12 col-md-2 p-0 bg-dark">
+        <nav class="navbar navbar-expand  bg-dark ">
+            <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
+                <li class="nav-item myNavItem">
+                    <h3><span class="badge">Horizontal Panel</span></h3>
+                    <div class="Selectable" draggable="true" ondragstart="dragStartH(event)">
+                        <div class="topPane HPane">
+                        </div>
+                        <div class="bottomPane HPane">
+                        </div>
+
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <h3><span class="badge">Vertical Panel</span></h3>
+                    <div class="Selectable" draggable="true" ondragstart="dragStartV(event)">
+                        <div class="leftPane VPane">
+                        </div>
+                        <div class="rightPane VPane">
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <h3><span class="badge">Horizontal Em Panel</span></h3>
+                    <div class="Selectable presentH" draggable="true" ondragstart="dragStartHFrame(event)">
+
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <button id="frameEditButton" class="btn btn-primary" onclick="editFrames()">Edit Frames</button>
+                </li>
+                <li class="nav-item">
+                    <button id="savePageButton" class="btn btn-primary" onclick="savePage()">Save the Page</button>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+    <div class=" col" ondrop="dropStructure(event)" ondragover="allowDrop(event)">
+        <div id="frames"></div>
+    </div>
+</div>
+
+<script>
+
+
+    function savePage() {
+        $('#frames').html()
+        $.post("/home/savepage", { page: JSON.stringify($('#frames').html())});
+    }
+</script>
