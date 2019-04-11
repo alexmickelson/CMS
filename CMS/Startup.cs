@@ -19,6 +19,8 @@ namespace CMS
 {
     public class Startup
     {
+        private CmsUrlConstraint cmsUrlConstraint;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -36,20 +38,21 @@ namespace CMS
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddScoped<ICMSService, CMSService>();
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<CMSContext>(options =>
                 options.UseSqlite(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultTokenProviders()
                 .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<CMSContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfiguration configuration)
         {
+            cmsUrlConstraint = new CmsUrlConstraint(configuration);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -70,9 +73,17 @@ namespace CMS
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+
+            routes.MapRoute(
+                name: "CmsRoute",
+                template: "{*permalink}",
+                defaults: new { controller = "Home", actions = "Index" },
+                constraints: new { permalink = cmsUrlConstraint }
+             );
+
+            routes.MapRoute(
+                name: "default",
+                template: "{controller=Home}/{action=Index}/{id?}");
 
             });
         }

@@ -10,8 +10,9 @@ namespace CMS.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(string permalink)
         {
+            ViewData["permalink"] = permalink;
             return View();
         }
 
