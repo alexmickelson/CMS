@@ -54,3 +54,55 @@ body {
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
 }
+
+
+
+/*resizing stuff*/
+
+.nav-item {
+    width: 100%
+}
+.Selectable {
+    width: 100%;
+    height: 10em;
+}
+div.HPane {
+    overflow: hidden;
+    width: 100%;
+    height: 50%;
+    border: 1px solid #666;
+}
+div.VPane {
+    overflow: hidden;
+    width: 50%;
+    height: 100%;
+    float: left;
+    border: 1px solid #666;
+}
+.container {
+    overflow: hidden;
+    height: 95vh;
+    border: 4px solid #5c626b;
+    margin: 1em;
+}
+.ui-resizable-s {
+    bottom: 0px;
+    height: 15px;
+}
+.ui-resizable-e {
+    width: 15px;
+}
+.presentH {
+    height: 5em;
+    width: 10em;
+    background-color: white;
+    border: 1px solid black;
+}
+.hFrame {
+    height: 30em;
+    width: 100%;
+    border: 1px solid #666;
+}
+.editFrame {
+    border: 2em solid black;
+}
