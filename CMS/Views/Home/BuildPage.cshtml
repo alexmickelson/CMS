@@ -4,6 +4,7 @@
 }
 
 
+<script src="~/js/layoutUI.js"></script>
 <div class="row h-100">
     <aside class=" myAside col-12 col-md-2 p-0 bg-dark">
         <nav class="navbar navbar-expand  bg-dark ">
@@ -51,7 +52,7 @@
 
 
     function savePage() {
-        
+
         $.ajax({
             type: 'POST',
             url: "/home/savepage",

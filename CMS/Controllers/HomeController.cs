@@ -46,9 +46,9 @@ namespace CMS.Controllers
 
         public IActionResult ViewPage(Guid id)
         {
-            if (id == 0)
+            if (id == Guid.Empty)
             {
-                break;
+                return RedirectToAction(nameof(Error));
             }
             var page = _cms.GetPage(id);
 
