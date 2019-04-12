@@ -20,7 +20,7 @@ namespace CMS
 {
     public class Startup
     {
-        private CmsUrlConstraint cmsUrlConstraint;
+        private UrlConstraint cmsUrlConstraint;
 
         public Startup(IConfiguration configuration)
         {
@@ -57,7 +57,7 @@ namespace CMS
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfiguration configuration)
         {
-            cmsUrlConstraint = new CmsUrlConstraint(configuration);
+            cmsUrlConstraint = new UrlConstraint(configuration);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -78,18 +78,16 @@ namespace CMS
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name: "CmsRoute",
+                    template: "{*permalink}",
+                    defaults: new { controller = "Content", actions = "Index" },
+                    constraints: new { permalink = cmsUrlConstraint }
+                 );
 
-            routes.MapRoute(
-                name: "CmsRoute",
-                template: "{*permalink}",
-                defaults: new { controller = "Home", actions = "Index" },
-                constraints: new { permalink = cmsUrlConstraint }
-             );
-
-            routes.MapRoute(
-                name: "default",
-                template: "{controller=Home}/{action=Index}/{id?}");
-
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

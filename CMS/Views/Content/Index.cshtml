@@ -1,0 +1,9 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    var cpage = Context.Items["cmspage"] as Page;
+}
+
+@ViewData["permalink"]
+@cpage.Content
+

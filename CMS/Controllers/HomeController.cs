@@ -23,7 +23,7 @@ namespace CMS.Controllers
         }
         public IActionResult Index()
         {
-            ViewData["permalink"] = permalink;
+            //ViewData["permalink"] = permalink;
             return View();
         }
 
@@ -56,17 +56,13 @@ namespace CMS.Controllers
             return View(page);
         }
 
-        public async Task<IActionResult> SavePage(string page)
+        [HttpPost]
+        public async Task<IActionResult> SavePage([FromForm]Page page)
         {
             var user = await _userManager.GetUserAsync(User);
-            var p = new Page
-            {
-                Content = page,
-                Id = new Guid(),
-                UserId = " "
-            };
+            page.Id = new Guid();
 
-            var a = await _cms.AddPageAsync(p);
+            var a = await _cms.AddPageAsync(page);
             return RedirectToAction(nameof(ListOfPages));
         }
 

@@ -40,6 +40,10 @@
                 <li class="nav-item">
                     <button id="savePageButton" class="btn btn-primary" onclick="savePage()">Save the Page</button>
                 </li>
+                <li class="nav-item">
+                    <h6>input a url</h6>
+                    <input id="inputUrl"></input>
+                </li>
             </ul>
         </nav>
     </aside>
@@ -48,21 +52,16 @@
     </div>
 </div>
 
+@Html.Partial("_pageForm", new Page())
+
 <script>
 
 
     function savePage() {
-
-        $.ajax({
-            type: 'POST',
-            url: "/home/savepage",
-            data: {
-                'page': $('#frames').html()
-            },
-            success: function () {
-                $(location).attr("href", '/home/listofpages');
-            }
-        });
+        $('#newContent').val($('#frames').html());
+        $('#newUrl').val($('#inputUrl').val());
+        $('#newPage').submit();
+        //$(location).attr("href", '/home/listofpages');
 
     }
 </script>
