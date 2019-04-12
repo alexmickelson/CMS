@@ -23,6 +23,7 @@ namespace CMS.Controllers
         }
         public IActionResult Index()
         {
+            ViewData["permalink"] = permalink;
             return View();
         }
 
