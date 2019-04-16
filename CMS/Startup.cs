@@ -81,13 +81,14 @@ namespace CMS
                 routes.MapRoute(
                     name: "CmsRoute",
                     template: "{*permalink}",
-                    defaults: new { controller = "Content", actions = "Index" },
+                    defaults: new { controller = "Content", action = "Index" },
                     constraints: new { permalink = cmsUrlConstraint }
-                 );
+                );
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}"
+                );
             });
         }
     }
