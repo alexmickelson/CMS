@@ -40,17 +40,21 @@
                     <script>
                         function subImgForm(e) {
                             e.preventDefault();
+                            debugger;
                             $.ajax({
                                 url: "/image/UploadImage",
                                 type: "post",
+                                async: true,
                                 ContentType: 'multipart/form-data',
                                 data: {
                                     'image': $(this).serialize()
-                                }
-                            }).done(function (res) {
-                                debugger;
-                            });
+                                },
+                                complete: function (data) {
+                                    alert(data);
 
+                                    debugger;
+                                }
+                            });
                         }
                     </script>
                     <form id="imageUploadForm" asp-action="UploadImage" enctype="multipart/form-data">
@@ -58,7 +62,7 @@
                         <input type="file" name="image" id="inputFile" />
                         <input type="submit" value="upload" class="btn btn-outline-primary" />
                     </form>
-                    <button type="button" class="btn btn-danger" onclick="subImgForm(e)" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" onclick="subImgForm(e)" onsubmit="false" data-dismiss="modal">Close</button>
                 </div>
 
             </div>

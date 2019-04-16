@@ -43,7 +43,7 @@ namespace CMS.Controllers
                     };
 
                     await _cmsService.UploadImage(img);
-                    return RedirectToAction(nameof(GetImages));
+                    return View(_cmsService.GetAllImages());
                 }
             }
             return null;

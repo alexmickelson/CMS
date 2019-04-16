@@ -1,7 +1,8 @@
-﻿
-@{
-    ViewData["Title"] = "UploadImage";
+﻿@model IEnumerable<Image>
+
+@foreach (var img in Model)
+{
+    <div>
+        <img src="data:image/gif;base64,@img.Picture" style="margin:0.5em; padding: 5px; border: 1px solid;" height="100" />
+    </div>
 }
-
-<h1>UploadImage</h1>
-
