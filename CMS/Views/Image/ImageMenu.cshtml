@@ -12,7 +12,7 @@
 
     <!-- The Modal -->
     <div class="modal" id="myModal">
-       
+
         <div class="modal-dialog modal-lg" style="max-height: 5000px;">
             <div class="modal-content">
 
@@ -24,21 +24,41 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <div class ="d-inline-flex flex-wrap" >
+                    <div class="d-inline-flex flex-wrap" id="imageList">
                         @foreach (var img in Model)
                         {
                             <div>
-                                <img src="data:image/gif;base64,@img.Picture"  style="margin:0.5em; padding: 5px; border: 1 solid;" height="100"/>
+                                <img src="data:image/gif;base64,@img.Picture" style="margin:0.5em; padding: 5px; border: 1 solid;" height="100" />
                             </div>
                         }
                     </div>
-                   
+
                 </div>
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    @Html.Partial("_uploadForm")
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <script>
+                        function subImgForm(e) {
+                            e.preventDefault();
+                            $.ajax({
+                                url: "/image/UploadImage",
+                                type: "post",
+                                ContentType: 'multipart/form-data',
+                                data: {
+                                    'image': $(this).serialize()
+                                }
+                            }).done(function (res) {
+                                debugger;
+                            });
+
+                        }
+                    </script>
+                    <form id="imageUploadForm" asp-action="UploadImage" enctype="multipart/form-data">
+                        <label>Upload Image</label>
+                        <input type="file" name="image" id="inputFile" />
+                        <input type="submit" value="upload" class="btn btn-outline-primary" />
+                    </form>
+                    <button type="button" class="btn btn-danger" onclick="subImgForm(e)" data-dismiss="modal">Close</button>
                 </div>
 
             </div>

@@ -23,7 +23,7 @@ namespace CMS.Controllers
             _userManager = userManager;
         }
 
-        public async Task<bool> UploadImage(IFormFile image)
+        public async Task<IActionResult> UploadImage([FromForm]IFormFile image)
         {
 
             var user = await _userManager.GetUserAsync(User);
@@ -43,15 +43,20 @@ namespace CMS.Controllers
                     };
 
                     await _cmsService.UploadImage(img);
-                    return true;
+                    return RedirectToAction(nameof(GetImages));
                 }
             }
-            return false;
+            return null;
         }
 
         public IActionResult ImageMenu()
         {
             
+            return View(_cmsService.GetAllImages());
+        }
+
+        public IActionResult GetImages()
+        {
             return View(_cmsService.GetAllImages());
         }
 
