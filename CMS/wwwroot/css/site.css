@@ -18,6 +18,29 @@ html {
   }
 }
 
+.imageModal{
+    width: 80% !important;
+}
+
+.modal {
+    padding: 0 !important;
+    
+}
+
+.modal-dialog {
+    max-width: 60% !important;
+    height: 80%;
+    padding: 0;
+    margin-left: 20%;
+
+}
+
+
+.modal-content {
+    border-radius: 0 !important;
+    height: 100%;
+}
+
 .border-top {
   border-top: 1px solid #e5e5e5;
 }

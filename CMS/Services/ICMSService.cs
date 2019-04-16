@@ -12,5 +12,7 @@ namespace CMS.Services
         Task<bool> AddPageAsync(Page newPage);
         Task<Comment[]> GetCommentsAsync();
         Page GetPage(Guid pageId);
+        Task<bool> UploadImage(Image img);
+        IEnumerable<Image> GetAllImages();
     }
 }

@@ -23,6 +23,12 @@ namespace CMS.Services
             return true;
         }
 
+        public IEnumerable<Image> GetAllImages()
+        {
+           return _context.Images.ToArray();
+                       
+        }
+
         public async Task<List<Page>> GetAllPagesAsync()
         {
             var pages = _context.Pages.ToList<Page>();
@@ -39,6 +45,15 @@ namespace CMS.Services
         {
             var a = _context.Pages.Where(p => p.Id == pageId);
             return a.First();
+        }
+
+        public async Task<bool> UploadImage(Image img)
+        {
+           await _context.Images.AddAsync(img);
+           await _context.SaveChangesAsync();
+
+            return true;
+            
         }
     }
 }

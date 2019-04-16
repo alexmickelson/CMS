@@ -8,8 +8,8 @@ namespace CMS.Models
     public class Image
     {
         public Guid Id { get; set; }
-        public Guid UserId { get; set; }
-        public byte[] Picture { get; set; }
+        public string UserId { get; set; }
+        public string Picture { get; set; }
 
     }
 }

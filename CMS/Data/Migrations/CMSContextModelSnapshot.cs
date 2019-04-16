@@ -43,9 +43,9 @@ namespace CMS.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<byte[]>("Picture");
+                    b.Property<string>("Picture");
 
-                    b.Property<Guid>("UserId");
+                    b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
@@ -241,8 +241,6 @@ namespace CMS.Data.Migrations
                     b.Property<string>("Bio");
 
                     b.Property<string>("Name");
-
-                    b.Property<string>("Nickname");
 
                     b.Property<Guid>("PictureId");
 

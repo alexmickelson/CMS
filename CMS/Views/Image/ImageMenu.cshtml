@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Image>
+@{
+    ViewData["Title"] = "ImageMenu";
+}
+
+<h1>ImageMenu</h1>
+<div class="container">
+    <!-- Button to Open the Modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        Check Images
+    </button>
+
+    <!-- The Modal -->
+    <div class="modal" id="myModal">
+       
+        <div class="modal-dialog modal-lg" style="max-height: 5000px;">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Images</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class ="d-inline-flex flex-wrap" >
+                        @foreach (var img in Model)
+                        {
+                            <div>
+                                <img src="data:image/gif;base64,@img.Picture"  style="margin:0.5em; padding: 5px; border: 1 solid;" height="100"/>
+                            </div>
+                        }
+                    </div>
+                   
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    @Html.Partial("_uploadForm")
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
