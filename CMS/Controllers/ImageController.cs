@@ -23,7 +23,9 @@ namespace CMS.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> UploadImage([FromForm]IFormFile image)
+        //[Consumes("multipart/form-data")]
+        [HttpPost]
+        public async Task<IActionResult> UploadImage(IFormFile image)
         {
 
             var user = await _userManager.GetUserAsync(User);
@@ -43,10 +45,10 @@ namespace CMS.Controllers
                     };
 
                     await _cmsService.UploadImage(img);
-                    return View(_cmsService.GetAllImages());
+                    return PartialView(_cmsService.GetAllImages());
                 }
             }
-            return null;
+            return PartialView(_cmsService.GetAllImages());
         }
 
         public IActionResult ImageMenu()
