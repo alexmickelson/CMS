@@ -1,0 +1,62 @@
+﻿<!-- Button to Open the Modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        Check Images
+    </button>
+
+    <!-- The Modal -->
+    <div class="modal" id="myModal">
+
+        <div class="modal-dialog modal-lg" style="max-height: 5000px;">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Images</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="d-inline-flex flex-wrap" id="imageList">
+                    </div>
+
+                </div>
+
+                <!-- Modal footer -->
+                <!--Alex you shouldn't leave your computer unlocked-->
+                <div class="modal-footer">
+                    <form id="imageUploadForm" asp-action="UploadImage" enctype="multipart/form-data">
+                        <label>Upload Image</label>
+                        <input type="file" name="image" id="inputFile" />
+                        <input type="submit" value="upload" class="btn btn-outline-primary" />
+                    </form>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+                    <script>
+                        $.post('/image/UploadImage', function (res) {
+                            $('#imageList').html(res);
+                        });
+
+
+                        $('#imageUploadForm').submit(function (e) {
+                            e.preventDefault();
+                            var formData = new FormData();
+                            formData.append("image", $('#inputFile')[0].files[0]);
+                            $.ajax({
+                                url: "/image/UploadImage",
+                                type: "post",
+                                data: formData,
+                                processData: false,
+                                contentType: false,
+                                success: function (res) {
+                                    $('#imageList').html(res);
+
+                                }
+                            });
+                        });
+                    </script>
+                </div>
+
+            </div>
+        </div>
+    </div>
