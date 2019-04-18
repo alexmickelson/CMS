@@ -27,6 +27,11 @@ namespace CMS.Controllers
             return View();
         }
 
+        public IActionResult Profile()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
