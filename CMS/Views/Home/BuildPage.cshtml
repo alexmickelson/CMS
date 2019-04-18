@@ -5,6 +5,7 @@
 
 
 <script src="~/js/layoutUI.js"></script>
+<link rel="stylesheet" href="~/css/pagebuilder.css" />
 <div class="row h-100">
     <aside class=" myAside col-12 col-md-2 p-0 bg-dark">
         <nav class="navbar navbar-expand  bg-dark ">
@@ -35,6 +36,12 @@
                     </div>
                 </li>
                 <li class="nav-item">
+                    <h3><span class="badge">Add Text</span></h3>
+                    <div class="Selectable presentH" draggable="true" ondragstart="dragStartP(event)">
+                        Text
+                    </div>
+                </li>
+                <li class="nav-item">
                     <button id="frameEditButton" class="btn btn-primary" onclick="editFrames()">Edit Frames</button>
                 </li>
                 <li class="nav-item">
@@ -47,7 +54,7 @@
             </ul>
         </nav>
     </aside>
-    <div class=" col" ondrop="dropStructure(event)" ondragover="allowDrop(event)">
+    <div class=" col" id="editableContent" ondragover="allowDrop(event)">
         <div id="frames"></div>
     </div>
 </div>

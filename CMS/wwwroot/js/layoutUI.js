@@ -75,41 +75,45 @@ function HResizable(JQObject) {
 }
 
 
-$(function () {
-    //vertical panels
-    $('.leftPane').each(function () {
-        VResizable(this);
-    });
-    //horizontal panels
-    $('.topPane').each(function () {
-        HResizable($(this));
-    });
-    $('.hFrame').each(function () {
-        HFrameResizable($(this));
-    });
-});
 
 function drop(event) {
     //get horizontal or vertical
     var type = event.dataTransfer.getData("text");
     //add the element and add the resizable function to it
-    if (type == "horizontal") {
-        event.target.insertAdjacentHTML('afterbegin',
-            `<div class="topPane HPane" ondrop="drop(event)" ondragover="allowDrop(event)">
-                </div>
-                <div class="bottomPane HPane" ondrop="drop(event)" ondragover="allowDrop(event)">
-                </div>`);
-        HResizable(event.target.firstElementChild);
-        //unbind drop so that when things are dropped in the child element, drop() doesnt get called twice
-        $(event.target).prop("ondrop", null).off("drop");
+    if (type == "horizontal" || type == "vertical") {
+        if (type == "horizontal") {
+                event.target.insertAdjacentHTML('afterbegin',
+                    `<div class="topPane HPane"  ondragover="allowDrop(event)">
+                        </div>
+                        <div class="bottomPane HPane" ondragover="allowDrop(event)">
+                        </div>`
+                );
+                HResizable(event.target.firstElementChild);
+                //unbind drop so that when things are dropped in the child element, drop() doesnt get called twice
+                $(event.target).prop("ondrop", null);
 
-    } else if (type == "vertical") {
+        } else if (type == "vertical") {
+            event.target.insertAdjacentHTML('afterbegin',
+                `<div class="leftPane VPane" ondragover="allowDrop(event)">
+                    </div>
+                    <div class="rigtPane VPane" ondragover="allowDrop(event)">
+                    </div>`
+            );
+            
+            VResizable(event.target.firstElementChild);
+            //unbind drop so that when things are dropped in the child element, drop() doesnt get called twice
+            $(event.target).prop("ondrop", null);
+        }
+        $(event.target.firstElementChild).on("drop", function (e) {
+            drop(e.originalEvent);
+        });
+        $(event.target.firstElementChild.nextElementSibling).on("drop", function (e) {
+            drop(e.originalEvent);
+        });
+    } else if (type == "paragraph") {
         event.target.insertAdjacentHTML('afterbegin',
-            `<div class="leftPane VPane" ondrop="drop(event)" ondragover="allowDrop(event)">
-                </div>
-                <div class="rigtPane VPane" ondrop="drop(event)" ondragover="allowDrop(event)">
-                </div>`);
-        VResizable(event.target.firstElementChild);
+            `<p contenteditable="true" >edit this text</p>`
+        );
         //unbind drop so that when things are dropped in the child element, drop() doesnt get called twice
         $(event.target).prop("ondrop", null).off("drop");
     }
@@ -137,7 +141,6 @@ function dropStructure(event) {
 function allowDrop(event) {
     event.preventDefault();
 }
-
 function dragStartH(event) {
     event.dataTransfer.setData("Text", "horizontal");
 }
@@ -147,7 +150,28 @@ function dragStartV(event) {
 function dragStartHFrame(event) {
     event.dataTransfer.setData("Text", "hFrame");
 }
+function dragStartP(event) {
+    event.dataTransfer.setData("Text", "paragraph");
+}
 
 function editFrames() {
     startFrameEdit();
 }
+
+
+$(function () {
+    //vertical panels
+    $('.leftPane').each(function () {
+        VResizable(this);
+    });
+    //horizontal panels
+    $('.topPane').each(function () {
+        HResizable($(this));
+    });
+    $('.hFrame').each(function () {
+        HFrameResizable($(this));
+    });
+    $('#editableContent').on("drop", function (e) {
+        dropStructure(e.originalEvent);
+    });
+});

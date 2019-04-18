@@ -85,10 +85,6 @@ body {
 .myNavItem {
     width: 100%
 }
-.Selectable {
-    width: 100%;
-    height: 10em;
-}
 div.HPane {
     overflow: hidden;
     width: 100%;
@@ -102,30 +98,8 @@ div.VPane {
     float: left;
     border: 1px solid #666;
 }
-.Selectable > .topPane {
-    background-color: #7a7a7a;
-}
-.Selectable > .bottomPane {
-    background-color: #ffffff;
-}
-.Selectable > .leftPane {
-    background-color: #7a7a7a;
-}
-.Selectable > .rightPane {
-    background-color: #ffffff;
-}
-.myAside {
-    height: 99vh;
-}
 .msg {
     display: inline;
-}
-.ui-resizable-s {
-    bottom: 0px;
-    height: 15px;
-}
-.ui-resizable-e {
-    width: 15px;
 }
 .presentH {
     height: 5em;
