@@ -1,0 +1,14 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@if (SignInManager.IsSignedIn(User))
+{
+    var user = UserManager.Users.Single(u => u.Email == User.Identity.Name);
+    <h2>Welcome @User.Identity.Name</h2>
+    <img src="@user.PictureId" alt="..." class="img-thumbnail">
+}
+else
+{
+    <h2>Sign in to see stuff</h2>
+}
+
