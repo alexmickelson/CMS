@@ -9,7 +9,6 @@ namespace CMS.Models
     public class User : IdentityUser
     {
         public string Name { get; set; }
-        //public string Username { get; set; }
         public string Bio { get; set; }
         public Guid PictureId { get; set; }
     }
