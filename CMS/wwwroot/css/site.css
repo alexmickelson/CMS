@@ -17,8 +17,63 @@ html {
     font-size: 16px;
   }
 }
+body {
+    background-color: #828282;
+}
 
-.imageModal{
+.profileContainer {
+    box-shadow: 0px 10px 5px #595959;
+    border-radius: 15px;
+    width: 60%;
+    margin-left: 25%;
+}
+
+.profileContainer {
+    font-family: 'Roboto';
+    font-size: 22px;
+    overflow: hidden;
+}
+
+.profileHeader {
+    background-color: darkgray;
+    overflow: hidden;
+    padding: 20px;
+}
+#bioTitle {
+    background-color: darkgray;
+    overflow: hidden;
+    padding: 15px;
+    padding-left:20px;
+}
+
+.bio {
+    font-style: italic;
+    padding: 30px;
+    background-color: white;
+    overflow: hidden;
+}
+.userCard {
+    display: inline-block;
+    display: flex;
+    flex: 1 0;
+    padding: 30px;
+    background-color: #d6d6d6;
+    overflow: hidden;
+}
+.userInfo{
+
+}
+img.profilePicture {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    max-width: 250px;
+    border: 3px solid #009e0d;
+    padding: 5px;
+    margin: 0px 50px 10px 0px;
+}
+.imageModal {
     width: 80% !important;
 }
 

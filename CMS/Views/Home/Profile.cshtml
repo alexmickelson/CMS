@@ -4,19 +4,39 @@
 @inject UserManager<User> UserManager
 @if (SignInManager.IsSignedIn(User))
 {
-    <h1>Edit</h1>
+<div class="profileContainer">
+     <div class="profileHeader">
+         <h3 style="padding-left:5px;"><b> @Model.Name's Profile</b></h3>
+     </div>
+    <div class="userCard">
+        <img class="profilePicture" src="data:image/gif;base64,@ViewBag.img">
+        <div class="userInfo">
+            @if (Model != null)
+            {
+                <br />
+                <h3> @Model.Name.ToUpper()</h3>
+                <h5 style="color:darkgray; background-color:#515151; padding: 5px; border-radius: 20px; width:70px"><i>&nbspUser</i></h5>
+                <p style="font-size:15px;"><b>Email:  </b>@Model.Email</p>
 
-    //var user = UserManager.Users.Single(u => u.Email == User.Identity.Name);
-    <a asp-controller="Home" asp-action="EditProfile" title="EditProfile">Edit Profile</a>
-    <h2>Welcome @Model.Email</h2>
+            }
 
-    <img src="@Model.PictureId" alt="..." class="img-thumbnail">
-    if (Model != null)
-    {
-        <h3> Name: @Model.Name</h3>
-        <h3>User Bio:</h3>
-        <p>@Model.Bio</p>
-    }
+            <a asp-controller="Home" asp-action="EditProfile" title="EditProfile"><button type="button" class="btn btn-success">Edit Profile</button></a>
+        </div>
+
+    </div>
+    <div id="bioTitle">
+        <h3>Bio</h3>
+    </div>
+
+    <div class="bio">
+        @if (Model != null)
+        {
+            <p>"@Model.Bio"</p>
+        }
+    </div>
+</div>
+
+
 
 }
 else

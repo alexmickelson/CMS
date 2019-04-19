@@ -34,6 +34,14 @@ namespace CMS.Controllers
         public async Task<IActionResult> Profile()
         {
             var user = await _userManager.GetUserAsync(User);
+            try
+            {
+                ViewBag.img = _context.Images.Single(i => i.Id == user.PictureId).Picture;
+            }
+            catch (Exception e)
+            {
+                ViewBag.img = "";
+            }
 
             return View(user);
         }
@@ -43,6 +51,14 @@ namespace CMS.Controllers
 
             var user = await _userManager.GetUserAsync(User);
 
+            try
+            {
+               ViewBag.img = _context.Images.Single(i => i.Id == user.PictureId);
+            }
+            catch(Exception e)
+            {
+                ViewBag.img = new Image();
+            }
 
         
             if ( user == null)
@@ -78,9 +94,9 @@ namespace CMS.Controllers
                 {
                     Console.WriteLine("Error, whoopsie");
                 }
-                //return RedirectToAction(nameof(Profile));
+                
             }
-            return View("Profile", user);
+            return View("Profile", currUser);
         }
 
         public IActionResult Privacy()

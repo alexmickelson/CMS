@@ -3,6 +3,7 @@
         Check Images
     </button>
 
+    <!--TODO: Add handler for the image uploaded-->
     <!-- The Modal -->
     <div class="modal" id="myModal">
 
@@ -36,6 +37,7 @@
                             $('#imageList').html(res);
                             $('#imageList').find('img').click(function (e) {
                                 $('#targetImage').attr("src", this.src);
+                                $('#targetImageId').attr("value", this.id);
                             });
                         });
 

@@ -10,6 +10,8 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
+        <img src="data:image/gif;base64,@ViewBag.img.Picture" id="targetImage" />
+        @Html.Partial("ImageButton")
         <form id="EditProfileForm" asp-action="EditProfile" asp-controller="Home">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -19,13 +21,13 @@
             <div class="form-group">
                 <input type="hidden" asp-for="SecurityStamp" value="@Model.SecurityStamp" class="form-control" />
             </div>
-            @*<div class="form-group">
-            <label asp-for="PictureId" class="control-label"></label>
-            <input id="idPicture" asp-for="PictureId" class="form-control" />
-            <span asp-validation-for="PictureId" class="text-danger"></span>
-        </div>*@
-            <img src="data:image/gif;base64,@Model.PictureId" id="targetImage"/>
-            @Html.Partial("ImageButton")
+
+            <div class="form-group">
+                <label asp-for="PictureId" class="control-label"></label>
+                <input id="targetImageId" type="hidden" asp-for="PictureId" value="" class="form-control" />
+                <span asp-validation-for="PictureId" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input id="idName" asp-for="Name" class="form-control" />
@@ -48,12 +50,12 @@
                 user.bio = $("#idBio").val();
                 user.name = $("#idName").val();
                 user.pictureId = $("#idPicture").val();
-               
+
                 $.ajax({
                     url: "/Home/EditProfile",
                     type: "POST",
                     data: JSON.stringify(user),
-                    contentType: "application/json",      
+                    contentType: "application/json",
                     dataType: "json",
                     success: function (res) {
                         debugger;

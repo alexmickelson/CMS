@@ -3,6 +3,6 @@
 @foreach (var img in Model)
 {
     <div>
-        <img src="data:image/gif;base64,@img.Picture" style="margin:0.5em; padding: 5px; border: 1px solid;" height="100" />
+        <img src="data:image/gif;base64,@img.Picture" id="@img.Id" style="margin:0.5em; padding: 5px; border: 1px solid;" height="100" />
     </div>
 }
