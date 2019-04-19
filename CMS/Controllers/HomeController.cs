@@ -7,18 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using CMS.Models;
 using CMS.Services;
 using Microsoft.AspNetCore.Identity;
+using CMS.Data;
 
 namespace CMS.Controllers
 {
     public class HomeController : Controller
     {
         private ICMSService _cms;
+        private CMSContext _context;
         private UserManager<User> _userManager;
 
         public HomeController(ICMSService cms,
-                            UserManager<User> userManager)
+                            UserManager<User> userManager, 
+                            CMSContext context)
         {
             _cms = cms;
+            _context = context;
             _userManager = userManager;
         }
         public IActionResult Index()
@@ -27,9 +31,56 @@ namespace CMS.Controllers
             return View();
         }
 
-        public IActionResult Profile()
+        public async Task<IActionResult> Profile()
         {
-            return View();
+            var user = await _userManager.GetUserAsync(User);
+
+            return View(user);
+        }
+
+        public async Task<IActionResult> EditProfile()
+        {
+
+            var user = await _userManager.GetUserAsync(User);
+
+
+        
+            if ( user == null)
+            {
+                return NotFound();
+            }
+            return View(user);
+        }
+
+        // POST: Channels/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditProfile([FromForm]User user)
+        {
+
+            var currUser = await _userManager.GetUserAsync(User);
+
+
+            currUser.Bio = user.Bio;
+            currUser.PictureId = user.PictureId;
+            currUser.Name = user.Name;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                   var u = await _userManager.UpdateAsync(currUser);
+                   //await _context.SaveChangesAsync();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error, whoopsie");
+                }
+                //return RedirectToAction(nameof(Profile));
+            }
+            return View("Profile", user);
         }
 
         public IActionResult Privacy()

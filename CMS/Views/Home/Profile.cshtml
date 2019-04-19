@@ -1,11 +1,23 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿@model CMS.Models.User
+@using Microsoft.AspNetCore.Identity
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 @if (SignInManager.IsSignedIn(User))
 {
-    var user = UserManager.Users.Single(u => u.Email == User.Identity.Name);
-    <h2>Welcome @User.Identity.Name</h2>
-    <img src="@user.PictureId" alt="..." class="img-thumbnail">
+    <h1>Edit</h1>
+
+    //var user = UserManager.Users.Single(u => u.Email == User.Identity.Name);
+    <a asp-controller="Home" asp-action="EditProfile" title="EditProfile">Edit Profile</a>
+    <h2>Welcome @Model.Email</h2>
+
+    <img src="@Model.PictureId" alt="..." class="img-thumbnail">
+    if (Model != null)
+    {
+        <h3> Name: @Model.Name</h3>
+        <h3>User Bio:</h3>
+        <p>@Model.Bio</p>
+    }
+
 }
 else
 {
