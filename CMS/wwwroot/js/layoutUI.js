@@ -114,6 +114,7 @@ function drop(event) {
         event.target.insertAdjacentHTML('afterbegin',
             `<p contenteditable="true" >edit this text</p>`
         );
+        
         //unbind drop so that when things are dropped in the child element, drop() doesnt get called twice
         $(event.target).prop("ondrop", null).off("drop");
     }

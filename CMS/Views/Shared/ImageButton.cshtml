@@ -34,6 +34,9 @@
                     <script>
                         $.post('/image/UploadImage', function (res) {
                             $('#imageList').html(res);
+                            $('#imageList').find('img').click(function (e) {
+                                $('#targetImage').attr("src", this.src);
+                            });
                         });
 
 
@@ -52,7 +55,11 @@
 
                                 }
                             });
+                            $('#imageList').find('img').click(function (e) {
+                                $('#targetImage').attr("src", this.src);
+                            });
                         });
+
                     </script>
                 </div>
 

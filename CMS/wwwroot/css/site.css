@@ -40,6 +40,9 @@ html {
     border-radius: 0 !important;
     height: 100%;
 }
+.modal-body {
+    overflow: scroll;
+}
 
 .border-top {
   border-top: 1px solid #e5e5e5;
