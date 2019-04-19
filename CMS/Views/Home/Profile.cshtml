@@ -11,7 +11,7 @@
     <div class="userCard">
         <img class="profilePicture" src="data:image/gif;base64,@ViewBag.img">
         <div class="userInfo">
-            @if (Model != null)
+            @if (Model.Name != null)
             {
                 <br />
                 <h3> @Model.Name.ToUpper()</h3>
