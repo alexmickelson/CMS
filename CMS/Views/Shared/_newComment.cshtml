@@ -1,0 +1,35 @@
+﻿@model CMS.Models.Comment
+
+<h4>Comment</h4>
+<hr />
+<div class="row">
+    <form id="newComment">
+        <input asp-for="Id" />
+        <input asp-for="UserId" />
+        <input asp-for="PageId" />
+        <input asp-for="ParentId" />
+        <input id="cmtBody" asp-for="Body" />
+        <input asp-for="Posted" />
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </form>
+    <script>
+        $('#newComment').submit(function (e) {
+            e.preventDefault();
+            var cmt = @Html.Raw(Json.Serialize(Model));
+            cmt.Body = $('#cmtBody').val();
+            $.ajax({
+                url: '/comments/Create',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify( cmt),
+                method: 'post',
+                success: function (res) {
+                    alert("comment submited");
+                }
+
+            });
+
+        })
+    </script>
+</div>
+

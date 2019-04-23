@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CMS.Data.Migrations
 {
-    public partial class alex3 : Migration
+    public partial class alex : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -189,10 +189,10 @@ namespace CMS.Data.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
-                    PostId = table.Column<Guid>(nullable: false),
+                    PageId = table.Column<Guid>(nullable: false),
+                    ParentId = table.Column<Guid>(nullable: true),
                     Body = table.Column<string>(nullable: true),
-                    Posted = table.Column<DateTime>(nullable: false),
-                    PageId = table.Column<Guid>(nullable: true)
+                    Posted = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -202,7 +202,7 @@ namespace CMS.Data.Migrations
                         column: x => x.PageId,
                         principalTable: "Pages",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

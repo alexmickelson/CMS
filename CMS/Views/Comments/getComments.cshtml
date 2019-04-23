@@ -1,0 +1,13 @@
+﻿@model List<Comment>
+
+<div style="margin-left: 2em;">
+    @foreach (var comment in Model)
+    {
+        <div>
+            <p>@comment.Body</p>
+            <div>
+                @Html.Partial("getComments", ((List<Comment>)ViewBag.Comments).Where(com => com.ParentId == comment.Id).ToList()))
+            </div>
+        </div>
+    }
+</div>

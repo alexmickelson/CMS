@@ -2,7 +2,7 @@
 
 
 <hr />
-<div class="row">
+<div class="row hidden">
     <div class="col-md-4">
         <form id="newPage" asp-action="SavePage" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -13,7 +13,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Url" class="control-label"></label>
-                <input id="newUrl" asp-for="Url" class="form-control" />
+                <input id="newUrl" required asp-for="Url" class="form-control" />
                 <span asp-validation-for="Url" class="text-danger"></span>
             </div>
             <div class="form-group">

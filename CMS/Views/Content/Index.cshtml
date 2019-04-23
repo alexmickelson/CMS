@@ -6,4 +6,4 @@
 
 @ViewData["permalink"]
 @Html.Raw(Model.Content)
-
+@Html.Partial("_comments", Model.Id)
