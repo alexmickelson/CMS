@@ -1,50 +1,27 @@
 ﻿@model CMS.Models.Comment
+@{
+    Model.Id = Guid.NewGuid();
 
-<h4>Comment</h4>
-<hr />
-
-
-
-<div class="row">
-    <form id="newComment">
-        <input hidden asp-for="Id" />
-        <input hidden asp-for="UserId" />
-        <input hidden asp-for="PageId" />
-        <input hidden asp-for="ParentId" />
-        <input id="cmtBody" asp-for="Body" />
-        <input hidden asp-for="Posted" />
-        <input type="submit" value="Create" class="btn btn-primary" />
-    </form>
-    <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
+    var commentBtn = "button" + Model.Id;
+    var newComment = "newComment" + Model.Id;
+    var newCommentButtonFunction = "newCommentButton" + Model.Id.ToString().Replace("-", "") + "(event)";
+}
+<div id="@newComment">
     <script>
-        var connection = new signalR.HubConnectionBuilder().withUrl("/commentsHub").build();
-        
-        $('#newComment').submit(function (e) {
-            e.preventDefault();
-            var cmt = @Html.Raw(Json.Serialize(Model));
-            cmt.Body = $('#cmtBody').val(); 
-
-            connection.invoke("addComment", cmt).catch(function (err) {
-                return console.error(err.toString());
-            });
-
-            //$.ajax({
-            //    url: '/comments/Create',
-            //    contentType: 'application/json',
-            //    dataType: 'json',
-            //    data: JSON.stringify( cmt),
-            //    method: 'post',
-            //    success: function (res) {
-            //        alert("comment submited");
-            //    }
-
-            //});
-
-        });
-
-
-        connection.start();
-       
+        function @newCommentButtonFunction{
+                $.ajax({
+                    url: "/Comments/newCommentForm",
+                    type: "post",
+                    contentType: "application/json",
+                    data: JSON.stringify(@Html.Raw(Json.Serialize(Model))),
+                    success: function (data) {
+                        $('#@newComment').append(data);
+                    }
+                });
+                $('#@commentBtn').addClass('d-none');
+            
+        }
     </script>
-</div>
+    <button id="@commentBtn" onclick="@newCommentButtonFunction" class="btn btn-primary">Comment</button>
 
+</div>

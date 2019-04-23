@@ -1,10 +1,16 @@
-﻿@model Guid 
-@{ 
-    //page id
+﻿@model Guid
+@{
+//page id
 }
 
-<div id="comments">
-    @Html.Partial("_newComment", new Comment { ParentId = null, PageId=Model })
+<script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
+<div id="commentIdnull">
+    <h4>Comments</h4>
+    <h6>New Comment</h6>
+    @Html.Partial("_newComment", new Comment { ParentId = null, PageId = Model })
+
+    <hr />
+
 
 </div>
 <script>
@@ -14,7 +20,24 @@
         contentType: "application/json",
         data: JSON.stringify(@Html.Raw(Json.Serialize(Model))),
         success: function (data) {
-            $('#comments').append(data); 
+            $('#commentIdnull').append(data);
         }
     });
+    var con = new signalR.HubConnectionBuilder().withUrl("/commentsHub").build();
+
+
+    con.on("newComment", function (comment) {
+        var parentid = 'commentId' + comment.parentId;
+        var parent = document.getElementById(parentid);
+        //debugger;
+        parent.innerHTML +=`
+        <div style="border-top: solid 1px; margin-left: 2em;">
+        <p>User: ${comment.userId}</p>
+        <p>${comment.body}</p>
+        </div>`;
+    });
+
+
+    con.start();
+
 </script>

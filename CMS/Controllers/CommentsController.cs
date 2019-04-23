@@ -34,6 +34,13 @@ namespace CMS.Controllers
             return PartialView(allComments.Where(c => c.ParentId == null).ToList());
         }
 
+        [HttpPost]
+        public IActionResult newCommentForm([FromBody]Comment comment)
+        {
+            return PartialView(comment);
+        }
+
+
         //[HttpPost]
         //public async Task<bool> Create([FromBody] Comment comment)
         //{

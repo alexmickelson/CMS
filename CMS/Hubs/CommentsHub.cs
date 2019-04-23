@@ -25,19 +25,17 @@ namespace CMS.Hubs
         public async Task addComment(Comment comment)
         {
             var user = await _userManager.GetUserAsync( Context.User);
-            comment.Id = Guid.NewGuid();
+            //comment.Id = Guid.NewGuid();
             comment.Posted = DateTime.Now;
-            if(user == null)
+            if(user != null)
             {
-
-                _context.Add(comment);
-                await _context.SaveChangesAsync();
-                return;
+                comment.UserId = user.Id;
+                
             } 
-            comment.UserId = user.Id;
 
             _context.Add(comment);
             await _context.SaveChangesAsync();
+            await Clients.All.SendAsync("newComment", comment);
             return;
         }
 
