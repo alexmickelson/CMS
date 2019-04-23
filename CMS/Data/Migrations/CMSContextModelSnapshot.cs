@@ -29,7 +29,7 @@ namespace CMS.Data.Migrations
 
                     b.Property<DateTime>("Posted");
 
-                    b.Property<Guid>("UserId");
+                    b.Property<string>("UserId");
 
                     b.HasKey("Id");
 

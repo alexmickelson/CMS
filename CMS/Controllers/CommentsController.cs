@@ -34,15 +34,15 @@ namespace CMS.Controllers
             return PartialView(allComments.Where(c => c.ParentId == null).ToList());
         }
 
-        [HttpPost]
-        public async Task<bool> Create([FromBody] Comment comment)
-        {
+        //[HttpPost]
+        //public async Task<bool> Create([FromBody] Comment comment)
+        //{
 
-            _context.Add(comment);
-            await _context.SaveChangesAsync();
-            return true;
+        //    _context.Add(comment);
+        //    await _context.SaveChangesAsync();
+        //    return true;
 
 
-        }
+        //}
     }
 }

@@ -5,6 +5,7 @@
     {
         <div>
             <p>@comment.Body</p>
+            @Html.Partial("_newComment", new Comment { PageId = comment.PageId, ParentId=comment.Id})
             <div>
                 @Html.Partial("getComments", ((List<Comment>)ViewBag.Comments).Where(com => com.ParentId == comment.Id).ToList()))
             </div>

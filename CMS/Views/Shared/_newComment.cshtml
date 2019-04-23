@@ -2,34 +2,49 @@
 
 <h4>Comment</h4>
 <hr />
+
+
+
 <div class="row">
     <form id="newComment">
-        <input asp-for="Id" />
-        <input asp-for="UserId" />
-        <input asp-for="PageId" />
-        <input asp-for="ParentId" />
+        <input hidden asp-for="Id" />
+        <input hidden asp-for="UserId" />
+        <input hidden asp-for="PageId" />
+        <input hidden asp-for="ParentId" />
         <input id="cmtBody" asp-for="Body" />
-        <input asp-for="Posted" />
+        <input hidden asp-for="Posted" />
         <input type="submit" value="Create" class="btn btn-primary" />
     </form>
+    <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
     <script>
+        var connection = new signalR.HubConnectionBuilder().withUrl("/commentsHub").build();
+        
         $('#newComment').submit(function (e) {
             e.preventDefault();
             var cmt = @Html.Raw(Json.Serialize(Model));
-            cmt.Body = $('#cmtBody').val();
-            $.ajax({
-                url: '/comments/Create',
-                contentType: 'application/json',
-                dataType: 'json',
-                data: JSON.stringify( cmt),
-                method: 'post',
-                success: function (res) {
-                    alert("comment submited");
-                }
+            cmt.Body = $('#cmtBody').val(); 
 
+            connection.invoke("addComment", cmt).catch(function (err) {
+                return console.error(err.toString());
             });
 
-        })
+            //$.ajax({
+            //    url: '/comments/Create',
+            //    contentType: 'application/json',
+            //    dataType: 'json',
+            //    data: JSON.stringify( cmt),
+            //    method: 'post',
+            //    success: function (res) {
+            //        alert("comment submited");
+            //    }
+
+            //});
+
+        });
+
+
+        connection.start();
+       
     </script>
 </div>
 

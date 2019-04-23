@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using CMS.Services;
 using CMS.Models;
+using CMS.Hubs;
 
 namespace CMS
 {
@@ -50,7 +51,7 @@ namespace CMS
                 .AddDefaultUI(UIFramework.Bootstrap4);
 
 
-            
+            services.AddSignalR();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -58,23 +59,27 @@ namespace CMS
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfiguration configuration)
         {
             cmsUrlConstraint = new UrlConstraint(configuration);
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-            //if (env.IsDevelopment())
-            //{
-            //}
-            //else
-            //{
-            //    app.UseExceptionHandler("/Home/Error");
-            //    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-            //    app.UseHsts();
-            //}
+            if (env.IsDevelopment())
+            {
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+
+
+            app.UseSignalR(r =>
+            {
+                r.MapHub<CommentsHub>("/commentsHub");
+            });
 
             app.UseMvc(routes =>
             {

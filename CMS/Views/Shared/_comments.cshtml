@@ -1,17 +1,20 @@
-﻿@model Guid
+﻿@model Guid 
+@{ 
+    //page id
+}
 
 <div id="comments">
-    @Html.Partial("_newComment", new Comment { ParentId = null })
+    @Html.Partial("_newComment", new Comment { ParentId = null, PageId=Model })
 
 </div>
 <script>
     $.ajax({
         url: "/Comments/getComments",
         type: "post",
-        contentType: "application/JSON",
-        data: JSON.stringify({ 'pageId': '@Model'}),
+        contentType: "application/json",
+        data: JSON.stringify(@Html.Raw(Json.Serialize(Model))),
         success: function (data) {
-            $('comments').append(data); 
+            $('#comments').append(data); 
         }
     });
 </script>

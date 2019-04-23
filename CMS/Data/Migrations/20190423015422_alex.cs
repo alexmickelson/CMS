@@ -188,7 +188,7 @@ namespace CMS.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
                     PageId = table.Column<Guid>(nullable: false),
                     ParentId = table.Column<Guid>(nullable: true),
                     Body = table.Column<string>(nullable: true),
