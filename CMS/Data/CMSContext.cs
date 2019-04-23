@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CMS.Data
 {
-    public class CMSContext : IdentityDbContext
+    public class CMSContext : IdentityDbContext<User>
     {
         public CMSContext(DbContextOptions<CMSContext> options)
             : base(options)

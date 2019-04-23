@@ -1,9 +1,17 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "BuildPage";
 }
+@using Microsoft.AspNetCore.Authorization
+@using CMS.Services
+@inject IAuthorizationService Authorization
+@{
+    var canEdit = (await Authorization.AuthorizeAsync(User, MyIdentityDataService.BlogPolicy_Edit)).Succeeded;
+    var canDelete = (await Authorization.AuthorizeAsync(User, MyIdentityDataService.BlogPolicy_Delete)).Succeeded;
+    var canAdd = (await Authorization.AuthorizeAsync(User, MyIdentityDataService.BlogPolicy_Add)).Succeeded;
+}
 
-
+@if (canAdd)
+{
 <script src="~/js/layoutUI.js"></script>
 <link rel="stylesheet" href="~/css/pagebuilder.css" />
 <div class="row h-100">
@@ -60,7 +68,11 @@
 </div>
 
 @Html.Partial("_pageForm", new Page())
-
+}
+else
+{
+    <h1>WHAT THE FRICK? SIGN IN!!! REEEEEEE</h1>
+}
 <script>
 
 

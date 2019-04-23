@@ -15,6 +15,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using CMS.Services;
 using CMS.Models;
+using Microsoft.Extensions.Options;
+using System.Security.Claims;
 
 namespace CMS
 {
@@ -44,18 +46,35 @@ namespace CMS
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
                 );
 
-            services.AddDefaultIdentity<User>()
+            //services.AddDefaultIdentity<User>()
+            //    .AddEntityFrameworkStores<CMSContext>()
+            //    .AddDefaultTokenProviders()
+            //    .AddDefaultUI(UIFramework.Bootstrap4);
+
+            services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<CMSContext>()
-                .AddDefaultTokenProviders()
-                .AddDefaultUI(UIFramework.Bootstrap4);
+                .AddDefaultUI(UIFramework.Bootstrap4)
+                .AddDefaultTokenProviders();
+
+            services.AddScoped<IUserClaimsPrincipalFactory<User>, AppClaimsPrincipalFactory>();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(MyIdentityDataService.BlogPolicy_Add, policy => policy.RequireRole(MyIdentityDataService.AdminRoleName, MyIdentityDataService.EditorRoleName, MyIdentityDataService.ContributorRoleName));
+                options.AddPolicy(MyIdentityDataService.BlogPolicy_Edit, policy => policy.RequireRole(MyIdentityDataService.AdminRoleName, MyIdentityDataService.EditorRoleName));
+                options.AddPolicy(MyIdentityDataService.BlogPolicy_Delete, policy => policy.RequireRole(MyIdentityDataService.AdminRoleName));
+            });
 
 
-            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfiguration configuration)
+        public void Configure(IApplicationBuilder app,
+                                IHostingEnvironment env,
+                                IConfiguration configuration, 
+                                UserManager<User> userManager,
+                                RoleManager<IdentityRole> roleManager)
         {
             cmsUrlConstraint = new UrlConstraint(configuration);
             if (env.IsDevelopment())
@@ -75,6 +94,8 @@ namespace CMS
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+            MyIdentityDataService.SeedData(userManager, roleManager);
+
 
             app.UseMvc(routes =>
             {
@@ -90,6 +111,37 @@ namespace CMS
                     template: "{controller=Home}/{action=Index}/{id?}"
                 );
             });
+        }
+    }
+
+    public class AppClaimsPrincipalFactory : UserClaimsPrincipalFactory<User, IdentityRole>
+    {
+        public AppClaimsPrincipalFactory(
+            UserManager<User> userManager
+            , RoleManager<IdentityRole> roleManager
+            , IOptions<IdentityOptions> optionsAccessor)
+        : base(userManager, roleManager, optionsAccessor)
+        { }
+
+        public async override Task<ClaimsPrincipal> CreateAsync(User user)
+        {
+            var principal = await base.CreateAsync(user);
+
+    //        if (!string.IsNullOrWhiteSpace(user.Bio))
+    //        {
+    //            ((ClaimsIdentity)principal.Identity).AddClaims(new[] {
+    //    new Claim(ClaimTypes.Gender, user.Bio)
+    //});
+    //        }
+
+    //        if (!string.IsNullOrWhiteSpace(user.Name))
+    //        {
+    //            ((ClaimsIdentity)principal.Identity).AddClaims(new[] {
+    //     new Claim(ClaimTypes.Name, user.Name),
+    //});
+    //        }
+
+            return principal;
         }
     }
 }

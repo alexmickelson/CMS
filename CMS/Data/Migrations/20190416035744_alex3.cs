@@ -40,7 +40,7 @@ namespace CMS.Data.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    Discriminator = table.Column<string>(nullable: false),
+                    //Discriminator = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Bio = table.Column<string>(nullable: true),
                     PictureId = table.Column<Guid>(nullable: true)
