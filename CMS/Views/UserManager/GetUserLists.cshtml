@@ -1,0 +1,39 @@
+﻿@model IEnumerable<User>
+@inject CMS.Data.CMSContext _context;
+@using Microsoft.AspNetCore.Authorization
+@using CMS.Services
+@inject IAuthorizationService Authorization
+@{
+    var canEdit = (await Authorization.AuthorizeAsync(User, MyIdentityDataService.BlogPolicy_Edit)).Succeeded;
+    var canDelete = (await Authorization.AuthorizeAsync(User, MyIdentityDataService.BlogPolicy_Delete)).Succeeded;
+    var canAdd = (await Authorization.AuthorizeAsync(User, MyIdentityDataService.BlogPolicy_Add)).Succeeded;
+}
+@{
+    ViewData["Title"] = "GetUserLists";
+}
+@if (canAdd && canEdit)
+{
+    <h1>Users:</h1>
+
+    @foreach (var user in Model)
+    {
+        <div class="container">
+            <div>
+                <img src="~/img/user_icon.png" height="30px" width="35px" /> @Html.DisplayFor(M => user.Email)
+            </div>
+            <div>
+                <a asp-action="UpgradeToAdmin" asp-route-user="@user.Email">ELEVATE THIS USER</a> |
+                <a asp-action="BlockUserFromSite" asp-route-user="@user.Email">BLOCK THIS USER</a> |
+                <a asp-action="UnblockUserFromSite" asp-route-user="@user.Email">UNBLOCK THIS USER</a>
+            </div>
+        </div>
+
+
+    }
+}
+else
+{
+    <h1 style="color: red">Access Denied</h1>
+}
+
+
