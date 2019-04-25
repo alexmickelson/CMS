@@ -1,4 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@using CMS.Services
+@inject IAuthorizationService Authorization
+@{
+    var canEdit = (await Authorization.AuthorizeAsync(User, MyIdentityDataService.BlogPolicy_Edit)).Succeeded;
+    var canDelete = (await Authorization.AuthorizeAsync(User, MyIdentityDataService.BlogPolicy_Delete)).Succeeded;
+    var canAdd = (await Authorization.AuthorizeAsync(User, MyIdentityDataService.BlogPolicy_Add)).Succeeded;
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -20,32 +31,41 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CMS</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="BuildPage">Page Builder UI</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ListofPages">List of Pages</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="UserManager" asp-action="GetUserLists">GetUserLists</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <div>
+            <ul class="navbarUl">
+                <a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/logo2.png" height="50px" width="190px" id='logo' /></a>
+
+                <li class="navbarLi"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="navbarLi"><a asp-area="" asp-controller="Home" asp-action="BuildPage">Page Builder</a></li>
+                <li class="navbarLi"><a asp-controller="Home" asp-action="ListofPages">List Of Pages</a></li>
+                @if (canAdd && canEdit)
+                {
+                    <li style="background-color:green" class="navbarLi"><a asp-area="" asp-controller="UserManager" asp-action="GetUserLists">User Manager</a></li>
+                }
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <li class="navbarLi" style="float:right">
+                        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                            <button class="navbarButton" type="submit">Logout</button>
+                        </form>
+                    </li>
+                    <li class="navbarLi" style="float:right">
+                        <a asp-controller="Home" asp-action="Profile" title="Manage">Hello @User.Identity.Name!</a>
+                    </li>
+
+                }
+                else
+                {
+                    <li class="navbarLi" style="float:right">
+                        <a asp-area="Identity" asp-page="/Account/Register">Register</a>
+                    </li>
+                    <li class="navbarLi" style="float:right; background-color:#27b0c9">
+                        <a asp-area="Identity" asp-page="/Account/Login">Login</a>
+                    </li>
+                }
+
+            </ul>
+        </div>
     </header>
     <div class="container">
         <main>

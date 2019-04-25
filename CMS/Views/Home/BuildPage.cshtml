@@ -12,66 +12,67 @@
 
 @if (canAdd)
 {
-<script src="~/js/layoutUI.js"></script>
-<link rel="stylesheet" href="~/css/pagebuilder.css" />
-<div class="row h-100">
-    <aside class=" myAside col-12 col-md-2 p-0 bg-dark">
-        <nav class="navbar navbar-expand  bg-dark ">
-            <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
-                <li class="nav-item myNavItem">
-                    <h3><span class="badge">Horizontal Panel</span></h3>
-                    <div class="Selectable" draggable="true" ondragstart="dragStartH(event)">
-                        <div class="topPane HPane">
-                        </div>
-                        <div class="bottomPane HPane">
-                        </div>
+    <script src="~/js/layoutUI.js"></script>
+    <link rel="stylesheet" href="~/css/pagebuilder.css" />
+    <div class="row h-100">
+        <aside class=" myAside col-12 col-md-2 p-0 bg-dark">
+            <nav class="navbar navbar-expand  bg-dark ">
+                <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
+                    <li class="nav-item myNavItem">
+                        <h3><span class="badge">Horizontal Panel</span></h3>
+                        <div class="Selectable" draggable="true" ondragstart="dragStartH(event)">
+                            <div class="topPane HPane">
+                            </div>
+                            <div class="bottomPane HPane">
+                            </div>
 
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <h3><span class="badge">Vertical Panel</span></h3>
-                    <div class="Selectable" draggable="true" ondragstart="dragStartV(event)">
-                        <div class="leftPane VPane">
                         </div>
-                        <div class="rightPane VPane">
+                    </li>
+                    <li class="nav-item">
+                        <h3><span class="badge">Vertical Panel</span></h3>
+                        <div class="Selectable" draggable="true" ondragstart="dragStartV(event)">
+                            <div class="leftPane VPane">
+                            </div>
+                            <div class="rightPane VPane">
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <h3><span class="badge">Horizontal Em Panel</span></h3>
-                    <div class="Selectable presentH" draggable="true" ondragstart="dragStartHFrame(event)">
+                    </li>
+                    <li class="nav-item">
+                        <h3><span class="badge">Horizontal Em Panel</span></h3>
+                        <div class="Selectable presentH" draggable="true" ondragstart="dragStartHFrame(event)">
 
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <h3><span class="badge">Add Text</span></h3>
-                    <div class="Selectable presentH" draggable="true" ondragstart="dragStartP(event)">
-                        Text
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <button id="frameEditButton" class="btn btn-primary" onclick="editFrames()">Edit Frames</button>
-                </li>
-                <li class="nav-item">
-                    <button id="savePageButton" class="btn btn-primary" onclick="savePage()">Save the Page</button>
-                </li>
-                <li class="nav-item">
-                    <h6>input a url</h6>
-                    <input id="inputUrl"></input>
-                </li>
-            </ul>
-        </nav>
-    </aside>
-    <div class=" col" id="editableContent" ondragover="allowDrop(event)">
-        <div id="frames"></div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <h3><span class="badge">Add Text</span></h3>
+                        <div class="Selectable presentH" draggable="true" ondragstart="dragStartP(event)">
+                            Text
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <button id="frameEditButton" class="btn btn-primary" onclick="editFrames()">Edit Frames</button>
+                    </li>
+                    <li class="nav-item">
+                        <button id="savePageButton" class="btn btn-primary" onclick="savePage()">Save the Page</button>
+                    </li>
+                    <li class="nav-item">
+                        <h6>input a url</h6>
+                        <input id="inputUrl"></input>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        <div class=" col" id="editableContent" ondragover="allowDrop(event)">
+            <div id="frames"></div>
+        </div>
     </div>
-</div>
 
-@Html.Partial("_pageForm", new Page())
+    @Html.Partial("_pageForm", new Page())
 }
 else
 {
-    <h1>WHAT THE FRICK? SIGN IN!!! REEEEEEE</h1>
+    <h1 style="color: red">Access Denied</h1>
+    <h3>You need admin privileges to access this end.</h3>
 }
 <script>
 
