@@ -88,7 +88,8 @@ namespace CMS.Controllers
                 try
                 {
                    var u = await _userManager.UpdateAsync(currUser);
-                   //await _context.SaveChangesAsync();
+                   ViewBag.img = _context.Images.Single(i => i.Id == currUser.PictureId).Picture;
+                    //await _context.SaveChangesAsync();
                 }
                 catch (Exception e)
                 {
