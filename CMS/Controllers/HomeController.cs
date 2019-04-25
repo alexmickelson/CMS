@@ -126,7 +126,7 @@ namespace CMS.Controllers
             }
             var page = _cms.GetPage(id);
 
-            return View(page);
+            return RedirectToAction("Index", "Content", new { permalink = page.Url });
         }
 
         [HttpPost]

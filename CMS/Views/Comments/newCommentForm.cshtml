@@ -1,0 +1,62 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model CMS.Models.Comment
+@{
+
+
+    var formId = "newComment" + Model.Id;
+    var bodyId = "newBody" + Model.Id;
+    var submitFunction = "submit" + Model.Id.ToString().Replace("-", "") + "(event)";
+    var commentFormId = "commentForm" + Model.Id;
+
+
+}
+
+<div id="@commentFormId">
+    <form id="@formId" onsubmit="@submitFunction">
+        <input hidden asp-for="Id" />
+        <input hidden asp-for="UserId" />
+        <input hidden asp-for="PageId" />
+        <input hidden asp-for="ParentId" />
+        <input id="@bodyId" asp-for="Body" />
+        <input hidden asp-for="Posted" />
+        <input type="submit" class="btn btn-primary" />
+    </form>
+    <script>
+    //signalr included form _comments
+    var connection = new signalR.HubConnectionBuilder().withUrl("/commentsHub").build();
+    connection.start();
+    function @submitFunction{
+        event.preventDefault();
+        var cmt = @Html.Raw(Json.Serialize(Model));
+        cmt.Body = $('#@bodyId').val();
+
+
+        connection.invoke("addComment", cmt).catch(function (err) {
+            return console.error(err.toString());
+        });
+        //$.ajax({
+        //    url: '/comments/Create',
+        //    contentType: 'application/json',
+        //    dataType: 'json',
+        //    data: JSON.stringify( cmt),
+        //    method: 'post',
+        //    success: function (res) {
+        //        alert("comment submited");
+        //    }
+
+        //});       
+
+     
+        $('#@commentFormId').parent().remove();
+
+        //remove comment form
+        $('#@commentFormId').remove();
+
+        };
+
+
+    </script>
+
+        </div>

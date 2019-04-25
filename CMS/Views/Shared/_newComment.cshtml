@@ -1,0 +1,26 @@
+﻿@model CMS.Models.Comment
+@{
+    Model.Id = Guid.NewGuid();
+
+    var commentBtn = "button" + Model.Id;
+    var newComment = "newComment" + Model.Id;
+    var newCommentButtonFunction = "newCommentButton" + Model.Id.ToString().Replace("-", "") + "(event)";
+}
+<div id="@newComment">
+    <script>
+        function @newCommentButtonFunction{
+                $.ajax({
+                    url: "/Comments/newCommentForm",
+                    type: "post",
+                    contentType: "application/json",
+                    data: JSON.stringify(@Html.Raw(Json.Serialize(Model))),
+                    success: function (data) {
+                        $('#@newComment').append(data);
+                    }
+                });
+                $('#@commentBtn').addClass('d-none');
+        }
+    </script>
+    <button id="@commentBtn" onclick="@newCommentButtonFunction" class="btn btn-primary">Comment</button>
+
+</div>

@@ -17,6 +17,7 @@ using CMS.Services;
 using CMS.Models;
 using Microsoft.Extensions.Options;
 using System.Security.Claims;
+using CMS.Hubs;
 
 namespace CMS
 {
@@ -58,6 +59,7 @@ namespace CMS
 
             services.AddScoped<IUserClaimsPrincipalFactory<User>, AppClaimsPrincipalFactory>();
 
+            services.AddSignalR();
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(MyIdentityDataService.BlogPolicy_Add, policy => policy.RequireRole(MyIdentityDataService.AdminRoleName, MyIdentityDataService.EditorRoleName, MyIdentityDataService.ContributorRoleName));
@@ -79,8 +81,6 @@ namespace CMS
             cmsUrlConstraint = new UrlConstraint(configuration);
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
             }
             else
             {
@@ -96,6 +96,11 @@ namespace CMS
             app.UseAuthentication();
             MyIdentityDataService.SeedData(userManager, roleManager);
 
+
+            app.UseSignalR(r =>
+            {
+                r.MapHub<CommentsHub>("/commentsHub");
+            });
 
             app.UseMvc(routes =>
             {

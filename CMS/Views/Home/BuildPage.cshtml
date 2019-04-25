@@ -80,7 +80,13 @@ else
     function savePage() {
         $('#newContent').val($('#frames').html());
         $('#newUrl').val($('#inputUrl').val());
-        $('#newPage').submit();
+        if ($('#newUrl').val() == "") {
+            alert("URL required");
+            
+        } else {
+            $('#newPage').submit();
+        }
+
         //$(location).attr("href", '/home/listofpages');
 
     }

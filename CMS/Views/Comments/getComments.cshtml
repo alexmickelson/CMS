@@ -1,0 +1,16 @@
+﻿@model List<Comment>
+
+<div style="margin-left: 2em;">
+    @foreach (var comment in Model)
+    {
+        var commentid = "commentId" + comment.Id;
+        <div id="@commentid" style="border-top: solid 1px;">
+            <p>User: @comment.UserId</p>
+            <p>@comment.Body</p>
+            @Html.Partial("_newComment", new Comment { PageId = comment.PageId, ParentId = comment.Id })
+
+            @Html.Partial("getComments", ((List<Comment>)ViewBag.Comments).Where(com => com.ParentId == comment.Id).ToList())
+
+        </div>
+    }
+</div>

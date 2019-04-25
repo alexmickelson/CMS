@@ -23,13 +23,13 @@ namespace CMS.Data.Migrations
 
                     b.Property<string>("Body");
 
-                    b.Property<Guid?>("PageId");
+                    b.Property<Guid>("PageId");
 
-                    b.Property<Guid>("PostId");
+                    b.Property<Guid?>("ParentId");
 
                     b.Property<DateTime>("Posted");
 
-                    b.Property<Guid>("UserId");
+                    b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
@@ -235,7 +235,8 @@ namespace CMS.Data.Migrations
                 {
                     b.HasOne("CMS.Models.Page")
                         .WithMany("Comments")
-                        .HasForeignKey("PageId");
+                        .HasForeignKey("PageId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

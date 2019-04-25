@@ -31,7 +31,14 @@ namespace CMS.Services
                 var page = dbContext.Pages.FirstOrDefault(p => p.Url == permalink);
                 if(page != null)
                 {
-                    httpContext.Items["cmspage"] = page;
+                    try //swallow so you can link to page without providing httpContext
+                    {
+                        httpContext.Items["cmspage"] = page;
+
+                    }catch(Exception e)
+                    {
+
+                    }
                     return true;
                 }
             }
