@@ -8,6 +8,8 @@ using CMS.Models;
 using CMS.Services;
 using Microsoft.AspNetCore.Identity;
 using CMS.Data;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace CMS.Controllers
 {
@@ -25,8 +27,13 @@ namespace CMS.Controllers
             _context = context;
             _userManager = userManager;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var httpClient = new HttpClient();
+            var json = await httpClient.GetStringAsync("http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1");
+
+            var searchResults = JsonConvert.DeserializeObject<IEnumerable<Quote>>(json);
+            ViewData["searchResults"] = searchResults.First();
             //ViewData["permalink"] = permalink;
             return View();
         }
@@ -127,6 +134,11 @@ namespace CMS.Controllers
             var page = _cms.GetPage(id);
 
             return RedirectToAction("Index", "Content", new { permalink = page.Url });
+        }
+
+        public IActionResult RequirementsPage()
+        {
+            return View();
         }
 
         [HttpPost]
