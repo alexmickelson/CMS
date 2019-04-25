@@ -2,7 +2,6 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @model CMS.Models.Comment
-@using System.IO;
 @{
 
 
@@ -47,49 +46,9 @@
         //        alert("comment submited");
         //    }
 
-        //});
+        //});       
 
-        //generate a partial to allow for new comments
-
-
-
-        debugger;
-        $('#@commentFormId').parent().parent().append(
-            @{
-
-                var nextComment = new Comment
-                {
-                    PageId = Model.PageId,
-                    ParentId = Model.ParentId
-                };
-                nextComment.Id = Guid.NewGuid();
-
-                var commentBtn = "button" + nextComment.Id;
-                var newComment = "newComment" + nextComment.Id;
-                var newCommentButtonFunction = "newCommentButton" + nextComment.Id.ToString().Replace("-", "") + "(event)";
-            }
-            `<div id="@newComment">
-                    <script>
-                        function @newCommentButtonFunction{
-                                $.ajax({
-                                    url: "/Comments/newCommentForm",
-                                    type: "post",
-                                    contentType: "application/json",
-                                    data: JSON.stringify(@Html.Raw(Json.Serialize(nextComment))),
-                                    success: function (data) {
-                                        $('#@newComment').append(data);
-                                    }
-                                });
-                                $('#@commentBtn').addClass('d-none');
-                        } <` + `/script>
-                    <button id="@commentBtn" onclick="@newCommentButtonFunction" class="btn btn-primary">Comment</button>
-
-                </div>
-`
-                `
-            
-
-        );
+     
         $('#@commentFormId').parent().remove();
 
         //remove comment form
@@ -98,6 +57,6 @@
         };
 
 
-        </script>
+    </script>
 
         </div>
