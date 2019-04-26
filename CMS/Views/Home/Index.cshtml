@@ -1,10 +1,18 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    var result = (Quote)ViewData["searchResults"];
     var cmsPage = Context.Items["cmspage"] as Page;
+
 }
 
 <p>@ViewData["permalink"]</p>
 <body class="indexPage">
-    <img src="~/img/sitetrisIndex.jpg" style="opacity: 0.6; margin-left: 20%; margin-top: 15%; border-radius: 100px" />
+    <img src="~/img/sitetrisIndex.jpg" style="opacity: 0.6; margin-left: 20%; margin-top: 5% ; border-radius: 100px" />
+    <div class="quote">
+        <h1>Quote of the day:</h1>
+        @Html.Raw(result.Content)
+
+        <small>@result.Title</small>
+    </div>
 </body>
 
