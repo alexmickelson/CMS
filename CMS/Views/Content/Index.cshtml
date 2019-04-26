@@ -4,6 +4,5 @@
     var cpage = Context.Items["cmspage"] as Page;
 }
 
-@ViewData["permalink"]
 @Html.Raw(Model.Content)
 @Html.Partial("_comments", Model.Id)

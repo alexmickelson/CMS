@@ -142,6 +142,7 @@ namespace CMS.Controllers
         }
 
         [HttpPost]
+        [RequestSizeLimit(2147483648)]
         public async Task<IActionResult> SavePage([FromForm]Page page)
         {
             var user = await _userManager.GetUserAsync(User);

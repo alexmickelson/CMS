@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.UserId)
+                @Html.DisplayNameFor(model => model.Url)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Content)
@@ -25,10 +25,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Content)
+                @Html.DisplayFor(modelItem => item.Url)
             </td>
             <td>
                 <a asp-action="ViewPage" asp-route-id="@item.Id" >See Page</a>

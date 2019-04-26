@@ -23,7 +23,7 @@
     <tr>
         <td>Have at least one page where logged on users can comment on posts.</td>
         <td>Log in, create a page, go to [List of Pages] and comment something!</td>
-        <td style="background-color:#f4bc42">Partial</td>
+        <td style="background-color:#65ad06">Done</td>
     </tr>
     <tr>
         <td>Administrators can create pages.</td>
@@ -73,17 +73,22 @@
     <tr>
         <td>Special Feature #6 (SignalR Comments).</td>
         <td>REEEEEEEEEEEEEEEEEEEEEEEE</td>
-        <td style="background-color:#f4bc42">Partial</td>
+        <td style="background-color:#65ad06">Done</td>
     </tr>
     <tr>
         <td>Clean architecture and code.</td>
         <td>Maybe ¯\_(ツ)_/¯</td>
-        <td style="background-color:#f4bc42">Partial</td>
+        <td style="background-color:#65ad06">Done</td>
     </tr>
     <tr>
         <td>Include a table showing where each requirement is fulfilled..</td>
-        <td>Is this recursion?</td>
+        <td id="reqs">Is this recursion?</td>
         <td style="background-color:#65ad06">Done</td>
     </tr>
 
 </table>  
+<script>
+    $.get("/Home/RequirementsPage", function (data) {
+        $('#reqs').html(data);
+    });
+</script>

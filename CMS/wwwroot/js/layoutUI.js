@@ -117,6 +117,19 @@ function drop(event) {
         
         //unbind drop so that when things are dropped in the child element, drop() doesnt get called twice
         $(event.target).prop("ondrop", null).off("drop");
+    }else if (type == "image") {
+        $('img#targetImage').removeAttr('id');
+        event.target.insertAdjacentHTML('afterbegin',
+            `<img id="targetImage" style="height: 100%;" />`
+        );
+        //unbind drop so that when things are dropped in the child element, drop() doesnt get called twice
+        $(event.target).prop("ondrop", null).off("drop");
+    } else if (type == "title") {
+        event.target.insertAdjacentHTML('afterbegin',
+            `<h1 contenteditable="true" >Your Title Here</h1>`
+        );
+        //unbind drop so that when things are dropped in the child element, drop() doesnt get called twice
+        $(event.target).prop("ondrop", null).off("drop");
     }
 
 }
@@ -128,8 +141,10 @@ function dropStructure(event) {
         var newDiv = jQuery('<div/>', {
             class: 'hFrame',
             ondrop: 'drop(event)',
-            ondragover: 'allowDrop(event)'
+            ondragover: 'allowDrop(event)',
+            
         });
+        newDiv.attr("style", "width: 100%; overflow: visible; ")
         $('#frames').append(newDiv);
         HFrameResizable(newDiv);
         //remove edit class if it is on
@@ -153,6 +168,13 @@ function dragStartHFrame(event) {
 }
 function dragStartP(event) {
     event.dataTransfer.setData("Text", "paragraph");
+}
+function dragStartTitle(event) {
+    event.dataTransfer.setData("Text", "title");
+}
+
+function dragStartImage(event) {
+    event.dataTransfer.setData("Text", "image");
 }
 
 function editFrames() {
