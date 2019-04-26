@@ -54,6 +54,7 @@ tr td:hover {
 }
 
 ul.navbarUl {
+    z-index: 10;
     list-style-type: none;
     margin: 0;
     padding: 0px;
@@ -67,6 +68,10 @@ ul.navbarUl {
 #logo{
 float:left;
 margin: 15px;
+}
+
+.container {
+    z-index:0;
 }
 
 .navbarButton {
