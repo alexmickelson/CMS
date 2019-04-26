@@ -1,6 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿
 <table>
     <tr>
         <th>Criteria</th>
@@ -81,14 +79,17 @@
         <td style="background-color:#65ad06">Done</td>
     </tr>
     <tr>
-        <td>Include a table showing where each requirement is fulfilled..</td>
+        <td style="top: 1em;">Include a table showing where each requirement is fulfilled..</td>
         <td id="reqs">Is this recursion?</td>
         <td style="background-color:#65ad06">Done</td>
     </tr>
 
 </table>  
 <script>
-    $.get("/Home/RequirementsPage", function (data) {
-        $('#reqs').html(data);
-    });
+    if (typeof loaded == 'undefined') {
+        $.get("/Home/RequirementsPage", function (data) {
+            loaded = true;
+            $('#reqs').html(data);
+        });
+    }
 </script>
